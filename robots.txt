@@ -1,0 +1,3 @@
+User-agent: *
+    Allow: /
+    Sitemap: https://mariadoe.xyz/my_sitemap.xml
