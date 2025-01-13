@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano Virtuel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css">
+    <style>
+        .piano-key {
+            transition: all 0.1s ease;
+        }
+        .piano-key.active {
+            background-color: #e5e7eb;
+            transform: translateY(4px);
+        }
+        .black-key {
+            position: absolute;
+            top: 0;
+            width: 30px;
+            height: 120px;
+            background-color: #1f2937;
+            z-index: 1;
+            transform-origin: top;
+        }
+        .black-key.active {
+            background-color: #4b5563;
+        }
+        .octave-label {
+            position: absolute;
+            bottom: -20px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+    <meta name="description" content="Découvrez un piano unique en son genre, et composez vos meilleurs sons!">
+</head>
+<body class="bg-gradient-to-r from-purple-500 to-pink-500 min-h-screen flex flex-col items-center justify-center p-8">
+    <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-7xl">
+        <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Piano Virtuel Professionnel <i class="fas fa-music"></i></h1>
+        
+        <div class="flex justify-center mb-6">
+            <div class="bg-gray-100 rounded-lg p-4">
+                <p class="text-gray-700">Cliquez sur les touches</p>
+            </div>
+        </div>
+
+        <div class="relative w-full h-64 flex justify-center mb-8 overflow-x-auto" id="piano">
+            <div class="flex relative">
+                <!-- Octave 1 -->
+                <div data-note="C1" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="D1" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="E1" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="F1" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="G1" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="A1" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="B1" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                
+                <!-- Octave 2 -->
+                <div data-note="C2" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="D2" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="E2" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="F2" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="G2" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="A2" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="B2" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+
+                <!-- Octave 3 -->
+                <div data-note="C3" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="D3" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="E3" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="F3" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="G3" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="A3" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+                <div data-note="B3" class="piano-key w-12 h-48 bg-white border border-gray-300 rounded-b-lg cursor-pointer"></div>
+
+                <!-- Black Keys Octave 1 -->
+                <div data-note="C#1" class="black-key cursor-pointer" style="left: 35px"></div>
+                <div data-note="D#1" class="black-key cursor-pointer" style="left: 83px"></div>
+                <div data-note="F#1" class="black-key cursor-pointer" style="left: 179px"></div>
+                <div data-note="G#1" class="black-key cursor-pointer" style="left: 227px"></div>
+                <div data-note="A#1" class="black-key cursor-pointer" style="left: 275px"></div>
+
+                <!-- Black Keys Octave 2 -->
+                <div data-note="C#2" class="black-key cursor-pointer" style="left: 371px"></div>
+                <div data-note="D#2" class="black-key cursor-pointer" style="left: 419px"></div>
+                <div data-note="F#2" class="black-key cursor-pointer" style="left: 515px"></div>
+                <div data-note="G#2" class="black-key cursor-pointer" style="left: 563px"></div>
+                <div data-note="A#2" class="black-key cursor-pointer" style="left: 611px"></div>
+
+                <!-- Black Keys Octave 3 -->
+                <div data-note="C#3" class="black-key cursor-pointer" style="left: 707px"></div>
+                <div data-note="D#3" class="black-key cursor-pointer" style="left: 755px"></div>
+                <div data-note="F#3" class="black-key cursor-pointer" style="left: 851px"></div>
+                <div data-note="G#3" class="black-key cursor-pointer" style="left: 899px"></div>
+                <div data-note="A#3" class="black-key cursor-pointer" style="left: 947px"></div>
+
+                <!-- Octave Labels -->
+                <span class="octave-label" style="left: 42px">Octave 1</span>
+                <span class="octave-label" style="left: 378px">Octave 2</span>
+                <span class="octave-label" style="left: 714px">Octave 3</span>
+            </div>
+        </div>
+
+        <div class="flex justify-center space-x-4">
+            <button id="recordBtn" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full transition-colors">
+                <i class="fas fa-record-vinyl mr-2"></i>Enregistrer
+            </button>
+            <button id="playBtn" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full transition-colors">
+                <i class="fas fa-play mr-2"></i>Lecture
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const keyMap = {
+            'a': 'C1', 'z': 'D1', 'e': 'E1', 'r': 'F1', 't': 'G1', 'y': 'A1', 'u': 'B1',
+            'q': 'C#1', 's': 'D#1', 'f': 'F#1', 'g': 'G#1', 'h': 'A#1',
+            'i': 'C2', 'o': 'D2', 'p': 'E2', 'v': 'F2', 'b': 'G2', 'n': 'A2', 'm': 'B2',
+            'j': 'C#2', 'k': 'D#2', 'l': 'F#2', 'w': 'G#2', 'x': 'A#2'
+        };
+
+        let recording = false;
+        let recordedNotes = [];
+        let startTime;
+
+        function createOscillator(frequency) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            
+            gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+            
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + 1);
+        }
+
+        function getNoteFrequency(note) {
+            const baseFrequencies = {
+                'C': 130.81, 'C#': 138.59, 'D': 146.83, 'D#': 155.56,
+                'E': 164.81, 'F': 174.61, 'F#': 185.00, 'G': 196.00,
+                'G#': 207.65, 'A': 220.00, 'A#': 233.08, 'B': 246.94
+            };
+
+            const octave = parseInt(note.slice(-1));
+            const noteName = note.slice(0, -1);
+            return baseFrequencies[noteName] * Math.pow(2, octave - 1);
+        }
+
+        function playNote(note) {
+            const key = document.querySelector(`[data-note="${note}"]`);
+            if (key) {
+                key.classList.add('active');
+                setTimeout(() => key.classList.remove('active'), 100);
+                createOscillator(getNoteFrequency(note));
+
+                if (recording) {
+                    recordedNotes.push({
+                        note: note,
+                        time: Date.now() - startTime
+                    });
+                }
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (keyMap[e.key] && !e.repeat) {
+                playNote(keyMap[e.key]);
+            }
+        });
+
+        document.querySelectorAll('.piano-key, .black-key').forEach(key => {
+            key.addEventListener('mousedown', () => {
+                playNote(key.dataset.note);
+            });
+        });
+
+        const recordBtn = document.getElementById('recordBtn');
+        const playBtn = document.getElementById('playBtn');
+
+        recordBtn.addEventListener('click', () => {
+            if (!recording) {
+                recording = true;
+                recordedNotes = [];
+                startTime = Date.now();
+                recordBtn.classList.add('bg-red-700');
+                recordBtn.innerHTML = '<i class="fas fa-stop mr-2"></i>Stop';
+            } else {
+                recording = false;
+                recordBtn.classList.remove('bg-red-700');
+                recordBtn.innerHTML = '<i class="fas fa-record-vinyl mr-2"></i>Enregistrer';
+            }
+        });
+
+        playBtn.addEventListener('click', () => {
+            if (recordedNotes.length > 0) {
+                playBtn.disabled = true;
+                recordedNotes.forEach(({note, time}) => {
+                    setTimeout(() => {
+                        playNote(note);
+                    }, time);
+                });
+                setTimeout(() => {
+                    playBtn.disabled = false;
+                }, recordedNotes[recordedNotes.length - 1].time + 1000);
+            }
+        });
+    </script>
+</body>
+</html>
